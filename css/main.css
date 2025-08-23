@@ -16,7 +16,7 @@
     --color-neutral-100: #FFFFFF;
     --color-neutral-200: #F5F5F5;
     --color-neutral-500: #828282;
-    --color-neutral-900: #333333;
+    --color-neutral-900: #eeeeee;
 
     /* Status Colors */
     --color-success: #4CAF50;
@@ -25,7 +25,7 @@
 
     /* Background and Text Colors */
     --color-background: #FFFFFF;
-    --color-text: #212121;
+    --color-text: #fcf9f9;
     --color-text-secondary: #757575;
 
     /* Legacy Support - Keeping for compatibility */
