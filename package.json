@@ -1,0 +1,58 @@
+{
+  "name": "sigpa-dashboard",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión Agrícola - Dashboard principal con funcionalidades de clima, órdenes y productos",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 8080 -c-1",
+    "dev": "npx live-server . --port=8080 --open=/",
+    "build": "echo 'Build process not implemented yet'",
+    "test": "echo 'Tests not implemented yet'",
+    "lint": "echo 'Linting not implemented yet'",
+    "format": "echo 'Formatting not implemented yet'"
+  },
+  "keywords": [
+    "agriculture",
+    "dashboard",
+    "management",
+    "weather",
+    "orders",
+    "products",
+    "sigpa",
+    "javascript",
+    "html",
+    "css",
+    "bootstrap"
+  ],
+  "author": "SIGPA Development Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/sigpa-dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/sigpa-dashboard/issues"
+  },
+  "homepage": "https://github.com/your-org/sigpa-dashboard#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "config": {
+    "port": 8080,
+    "host": "localhost"
+  }
+}
