@@ -72,6 +72,12 @@
                             <span class="nav-text">Alertas</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#resultados" class="nav-link" data-section="resultados">
+                            <i class="bi bi-bar-chart-line"></i>
+                            <span class="nav-text">Resultados</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
@@ -109,64 +115,178 @@
 
             <!-- Dashboard Content -->
             <div class="dashboard-content">
-                <!-- KPIs Section -->
-                <section class="kpis-section">
+                <!-- 1. Resumen del estado de los cultivos + Gráfica -->
+                <section class="cultivos-summary mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="card text-center h-100 bg-success text-white">
+                                <div class="card-body">
+                                    <i class="bi bi-flower3 display-5 mb-2"></i>
+                                    <h4 id="totalCultivos" class="mb-1">18</h4>
+                                    <p class="card-text">Total de Cultivos</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center h-100 text-white">
+                                <div class="card-body">
+                                    <span class="status-dot bg-success mb-2 d-inline-block" style="width:16px;height:16px;border-radius:50%;"></span>
+                                    <p class="card-text">Saludables: <span id="cultivosSaludables">12</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center h-100  text-white">
+                                <div class="card-body">
+                                    <span class="status-dot bg-warning mb-2 d-inline-block" style="width:16px;height:16px;border-radius:50%;"></span>
+                                    <p class="card-text">En riesgo: <span id="cultivosRiesgo">3</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center h-100  text-white">
+                                <div class="card-body">
+                                    <span class="status-dot bg-secondary mb-2 d-inline-block" style="width:16px;height:16px;border-radius:50%;"></span>
+                                    <p class="card-text">Dormidos: <span id="cultivosDormidos">3</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-3"></div>
+                        <small>Última actualización de crecimiento: <span id="ultimaActualizacion">2024-06-10</span></small>
+                    </div>
+                </section>
+
+                <!-- 2. Próximos eventos del calendario -->
+                <section class="calendario-eventos mb-4">
+                    <div class="section-header">
+                        <h5>Próximos eventos del calendario</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <i class="bi bi-droplet"></i> Riego programado: <span>12/06/2024</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-flask"></i> Análisis de suelo: <span>15/06/2024</span>
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-exclamation-circle"></i> Notificación: <span>Fertilización recomendada el 18/06/2024</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- 3. Alertas activas -->
+                <section class="alertas-activas mb-4">
+                    <div class="section-header">
+                        <h5>Alertas activas</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-danger">
+                            <i class="bi bi-cloud-snow"></i> Alerta meteorológica: Posible helada esta noche
+                        </li>
+                        <li class="list-group-item list-group-item-warning">
+                            <i class="bi bi-bug"></i> Plaga detectada: Pulgón en cultivo de maíz
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            <i class="bi bi-shield-exclamation"></i> Alerta preventiva: Riesgo de exceso de humedad
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- 4. Recomendaciones de riego -->
+                <section class="riego-recomendaciones mb-4">
+                    <div class="section-header">
+                        <h5>Recomendaciones de riego</h5>
+                    </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="kpi-card">
-                                <div class="kpi-icon">
-                                    <i class="bi bi-grid-3x3-gap"></i>
-                                </div>
-                                <div class="kpi-content">
-                                    <h3 class="kpi-number" id="totalProducts">62,783</h3>
-                                    <p class="kpi-label">Total Productos Comprados</p>
-                                </div>
-                            </div>
+                        <div class="col-md-6">
+                            <p><i class="bi bi-droplet-half"></i> Cantidad estimada: <strong>22 mm</strong></p>
+                            <p><i class="bi bi-calendar-event"></i> Fecha óptima: <strong>13/06/2024</strong></p>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="kpi-card">
-                                <div class="kpi-icon">
-                                    <i class="bi bi-people"></i>
-                                </div>
-                                <div class="kpi-content">
-                                    <h3 class="kpi-number" id="connectedFarmers">262</h3>
-                                    <p class="kpi-label">Agricultores Conectados</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="kpi-card">
-                                <div class="kpi-icon">
-                                    <i class="bi bi-activity"></i>
-                                </div>
-                                <div class="kpi-content">
-                                    <h3 class="kpi-number" id="activeSite">11.91%</h3>
-                                    <p class="kpi-label">Actividad del Sitio</p>
-                                </div>
-                            </div>
+                        <div class="col-md-6">
+                            <p><i class="bi bi-lightbulb"></i> Sugerencia: Riego moderado por clima seco y tipo de cultivo (maíz)</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Orders Tracking Section -->
-                <section class="orders-section">
+                <!-- 5. Clima actual y pronóstico -->
+                <section class="clima-pronostico mb-4">
                     <div class="section-header">
-                        <h3>Seguimiento de Órdenes</h3>
+                        <h5>Clima actual y pronóstico</h5>
                     </div>
-                    <div class="orders-table-container">
-                        <div class="orders-table" id="ordersTable">
-                            <!-- Orders will be populated by JavaScript -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="weather-card">
+                                <i class="bi bi-cloud-sun"></i>
+                                <p>Temp: <span id="tempActual">27°C</span></p>
+                                <p>Humedad: <span id="humedadActual">65%</span></p>
+                                <p>Lluvia: <span id="lluviaActual">0 mm</span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Día</th>
+                                        <th>Temp</th>
+                                        <th>Lluvia</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mié</td>
+                                        <td>28°C</td>
+                                        <td>2 mm</td>
+                                        <td><i class="bi bi-cloud-drizzle"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jue</td>
+                                        <td>26°C</td>
+                                        <td>0 mm</td>
+                                        <td><i class="bi bi-sun"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vie</td>
+                                        <td>25°C</td>
+                                        <td>5 mm</td>
+                                        <td><i class="bi bi-cloud-rain"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
 
-                <!-- Products Section -->
-                <section class="products-section">
+                <!-- 6. Últimas actividades registradas -->
+                <section class="actividades-recientes mb-4">
                     <div class="section-header">
-                        <h3>Precios del Mercado</h3>
+                        <h5>Últimas actividades registradas</h5>
                     </div>
-                    <div class="products-grid" id="productsGrid">
-                        <!-- Products will be populated by JavaScript -->
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <i class="bi bi-bar-chart"></i> Registro de crecimiento: Maíz, 10/06/2024
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-bug"></i> Plaga reportada: Pulgón, 09/06/2024
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-person-check"></i> Usuario realizó fertilización, 08/06/2024
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- 7. Accesos rápidos / Atajos -->
+                <section class="accesos-rapidos mb-4">
+                    <div class="section-header">
+                        <h5>Accesos rápidos</h5>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#cultivos" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nuevo cultivo</a>
+                        <a href="#calendario" class="btn btn-primary"><i class="bi bi-calendar3"></i> Ver calendario</a>
+                        <a href="#alertas" class="btn btn-warning"><i class="bi bi-exclamation-triangle"></i> Revisar alertas</a>
+                        <a href="#resultados" class="btn btn-info"><i class="bi bi-bar-chart-line"></i> Resultados</a>
+                        <a href="#ayuda" class="btn btn-outline-secondary"><i class="bi bi-question-circle"></i> Soporte técnico</a>
                     </div>
                 </section>
             </div>
