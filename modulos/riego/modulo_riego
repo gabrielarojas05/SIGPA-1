@@ -1,1 +1,675 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MÓDULO DE RIEGO (PAPA Y CEBOLLA) - Gabriela Rojas</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1: #dff6ff;
+      --bg2: #e6fff0;
+      --card: #ffffff;
+      --accent: #3aa7a4;
+      --accent-dark: #2a8f8b;
+      --muted: #6b7280;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 12px;
+      --glass: rgba(255,255,255,0.7);
+      --shadow: 0 6px 18px rgba(15,23,42,0.08);
+    }
+
+    /* Layout */
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg,var(--bg1),var(--bg2));
+      color: #0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:32px auto;
+      padding:24px;
+      backdrop-filter: blur(4px);
+    }
+
+    header{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .logo{
+      width:82px;
+      height:82px;
+      border-radius:18px;
+      background: linear-gradient(180deg,var(--accent),var(--accent-dark));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      box-shadow: var(--shadow);
+      font-family: "Fredoka", "Poppins", sans-serif;
+      font-size:18px;
+    }
+
+    h1{
+      margin:0;
+      font-family: "Fredoka", sans-serif;
+      font-size:20px;
+      line-height:1.05;
+    }
+
+    .meta{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    main{
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    /* Card */
+    .card{
+      background: var(--card);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(15,23,42,0.04);
+    }
+
+    /* Form */
+    form .field{
+      display:flex;
+      flex-direction:column;
+      margin-bottom:12px;
+    }
+
+    label{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    input[type="text"], input[type="date"], input[type="number"], select{
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(15,23,42,0.08);
+      font-size:14px;
+      outline:none;
+      transition: box-shadow .14s, border-color .14s;
+    }
+
+    input:focus, select:focus{
+      box-shadow: 0 6px 18px rgba(42,142,139,0.08);
+      border-color: var(--accent-dark);
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border:0;
+      padding:10px 14px;
+      border-radius:10px;
+      background: linear-gradient(90deg,var(--accent),var(--accent-dark));
+      color:white;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow: 0 8px 20px rgba(42,142,139,0.14);
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    /* Success message */
+    .toast{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background: linear-gradient(90deg,#ddffef,#f0fff8);
+      border:1px solid rgba(16,185,129,0.08);
+      color:var(--success);
+      font-weight:600;
+      display:none;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+
+    th,td{
+      text-align:left;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(15,23,42,0.04);
+    }
+
+    th{
+      font-size:13px;
+      color:var(--muted);
+      background: rgba(255,255,255,0.6);
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(2px);
+    }
+
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* Sidebar info */
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .stat{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      padding:10px;
+      border-radius:10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      box-shadow: 0 6px 12px rgba(15,23,42,0.04);
+    }
+
+    .stat strong{ font-size:18px; }
+    .muted-small{ color:var(--muted); font-size:13px; }
+
+    /* Reference box */
+    .refs{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .ref-card{
+      padding:10px;
+      border-radius:10px;
+      border:1px dashed rgba(15,23,42,0.04);
+      background: linear-gradient(180deg, rgba(240,255,255,0.6), rgba(255,255,255,0.5));
+    }
+
+    .badge{
+      display:inline-block;
+      padding:6px 8px;
+      border-radius:8px;
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .badge.ok{ background: rgba(16,185,129,0.12); color:var(--success); border:1px solid rgba(16,185,129,0.08); }
+    .badge.warn{ background: rgba(245,158,11,0.09); color:var(--warning); border:1px solid rgba(245,158,11,0.06); }
+    .badge.bad{ background: rgba(239,68,68,0.08); color:var(--danger); border:1px solid rgba(239,68,68,0.06); }
+
+    /* Responsive */
+    @media (max-width:980px){
+      main{ grid-template-columns: 1fr; }
+      .refs{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="logo">RIEGO</div>
+      <div>
+        <h1>MÓDULO DE RIEGO (PAPA Y CEBOLLA)</h1>
+        <div class="meta">Autor: Gabriela Rojas — Módulo asignado: Riego</div>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT: Form -->
+      <section class="card">
+        <h3 style="margin-top:0">Registrar riego</h3>
+
+        <form id="riegoForm">
+          <div class="field">
+            <label for="fecha">Fecha</label>
+            <input id="fecha" type="date" required />
+          </div>
+
+          <div class="field">
+            <label for="cultivo">Cultivo</label>
+            <select id="cultivo" required>
+              <option value="Papa">Papa</option>
+              <option value="Cebolla">Cebolla</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="field" style="flex:1">
+              <label for="cantidad">Cantidad</label>
+              <input id="cantidad" type="number" step="any" min="0" placeholder="Ej: 25" required />
+            </div>
+
+            <div class="field" style="width:120px">
+              <label for="unidad">Unidad</label>
+              <select id="unidad">
+                <option value="mm">mm</option>
+                <option value="litros">litros</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="metodo">Método de riego</label>
+            <select id="metodo" required>
+              <option value="manguera">Manguera</option>
+              <option value="aspersor">Aspersor</option>
+              <option value="goteo">Goteo</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="responsable">Responsable</label>
+            <input id="responsable" type="text" placeholder="Nombre del responsable" required />
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+            <button class="btn" type="submit">Guardar riego</button>
+            <div id="toast" class="toast">Riego guardado</div>
+          </div>
+        </form>
+
+        <div style="margin-top:12px" class="small muted-small">
+          Validaciones:
+          <ul style="margin:6px 0 0 18px;padding:0;color:var(--muted)">
+            <li>La fecha no puede ser futura.</li>
+            <li>El volumen debe ser mayor a 0.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- RIGHT: Historial + Totales + Refs -->
+      <section style="display:flex;flex-direction:column;gap:12px;">
+
+        <div class="card" style="overflow:auto;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <h3 style="margin:0">Historial de riegos</h3>
+            <div class="small muted-small">Registros guardados en localStorage</div>
+          </div>
+
+          <table id="tablaRiegos" aria-live="polite">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cultivo</th>
+                <th>Cantidad</th>
+                <th>Método</th>
+                <th>Responsable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- filas generadas por JS -->
+            </tbody>
+          </table>
+
+          <div style="margin-top:10px; display:flex; gap:10px; align-items:center; justify-content:flex-end;">
+            <button id="limpiar" style="background:transparent;border:1px solid rgba(15,23,42,0.06);padding:8px 10px;border-radius:10px;cursor:pointer">Limpiar todo</button>
+          </div>
+        </div>
+
+        <div class="side">
+          <div class="stat card">
+            <div>
+              <div class="small">Total agua aplicada — <strong id="totalGlobal">0 mm</strong></div>
+              <div class="small muted-small">Suma de todas las entradas (si unidad diferente a mm, se omite en comparaciones)</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="small">Última carga:</div>
+              <div class="small muted-small" id="ultimaCarga">—</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="card stat">
+              <div>
+                <div class="small">Papa</div>
+                <strong id="totalPapa">0 mm</strong>
+                <div class="small muted-small" id="statusPapa">—</div>
+              </div>
+            </div>
+
+            <div class="card stat">
+              <div>
+                <div class="small">Cebolla</div>
+                <strong id="totalCebolla">0 mm</strong>
+                <div class="small muted-small" id="statusCebolla">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 style="margin:6px 0">Datos de referencia</h4>
+            <div class="refs">
+              <div class="ref-card">
+                <strong>Valores recomendados (mm / semana)</strong>
+                <table style="width:100%;margin-top:8px">
+                  <thead><tr><th>Temporada</th><th>Papa</th><th>Cebolla</th></tr></thead>
+                  <tbody>
+                    <tr><td class="small">Verano / Seco (dic - mar)</td><td class="small">30 - 40</td><td class="small">25 - 35</td></tr>
+                    <tr><td class="small">Lluvias (abr, may, sep, nov)</td><td class="small">20 - 30</td><td class="small">15 - 25</td></tr>
+                    <tr><td class="small">Semanas intermedias</td><td class="small">25 - 35</td><td class="small">20 - 30</td></tr>
+                  </tbody>
+                </table>
+                <div style="margin-top:8px;font-size:12px;color:var(--muted)">
+                  Nota: valores de referencia semanales orientativos. Las comparaciones se calculan como promedio mm/semana en el periodo de registros.
+                </div>
+              </div>
+
+              <div class="ref-card">
+                <strong>Explicación de la comparación</strong>
+                <ol style="margin:8px 0 0 18px;color:var(--muted);font-size:13px">
+                  <li>Se suma el total aplicado al cultivo (entradas en mm).</li>
+                  <li>Se calcula el período entre la primera y última fecha registrada para ese cultivo (mínimo 1 semana).</li>
+                  <li>Se obtiene el promedio aplic. por semana = total_mm / semanas.</li>
+                  <li>Se compara ese promedio con el rango recomendado para la temporada de la última fecha registrada.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+<script>
+/*
+  Estructura guardada en localStorage:
+  key: "riegos_v1"
+  value: JSON.stringify(Array de objetos:
+    { id, fecha (ISO yyyy-mm-dd), cultivo, cantidad (Number), unidad, metodo, responsable, createdAt }
+  )
+*/
+
+const LS_KEY = 'riegos_v1';
+
+function $(id){ return document.getElementById(id); }
+
+/* --- Utilities --- */
+function hoyISO(){
+  const d = new Date();
+  // build local date string YYYY-MM-DD (no timezone shift)
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+function parseISODate(s){
+  // returns Date object from yyyy-mm-dd
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y,m-1,d);
+}
+
+function daysBetween(aISO,bISO){
+  const a = parseISODate(aISO);
+  const b = parseISODate(bISO);
+  const ms = Math.abs(b - a);
+  return Math.floor(ms / (1000*60*60*24));
+}
+
+/* --- Season helper --- */
+function seasonFromMonth(monthIndexPlus1){
+  // monthIndexPlus1: 1..12
+  const m = Number(monthIndexPlus1);
+  // Verano/seco: dic(12), ene(1), feb(2), mar(3)
+  if([12,1,2,3].includes(m)) return 'Verano/Seco';
+  // Lluvias: abr (4), may (5), sep (9), nov (11)
+  if([4,5,9,11].includes(m)) return 'Lluvias';
+  return 'Intermedia';
+}
+
+/* Recommended ranges mm/week per crop per season */
+const recommended = {
+  'Papa': {
+    'Verano/Seco':[30,40],
+    'Lluvias':[20,30],
+    'Intermedia':[25,35]
+  },
+  'Cebolla': {
+    'Verano/Seco':[25,35],
+    'Lluvias':[15,25],
+    'Intermedia':[20,30]
+  }
+};
+
+/* --- LocalStorage helpers --- */
+function loadRiegos(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return [];
+    return JSON.parse(raw);
+  }catch(e){
+    console.error('Error parseando localstorage', e);
+    return [];
+  }
+}
+
+function saveRiegos(arr){
+  localStorage.setItem(LS_KEY, JSON.stringify(arr));
+}
+
+/* --- Rendering --- */
+function renderTabla(){
+  const tbody = document.querySelector('#tablaRiegos tbody');
+  tbody.innerHTML = '';
+  const r = loadRiegos().sort((a,b)=> a.fecha < b.fecha ? 1 : -1); // más recientes arriba
+  if(r.length === 0){
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="5" style="text-align:center;color:var(--muted)">No hay riegos registrados</td>';
+    tbody.appendChild(tr);
+  } else {
+    for(const item of r){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item.fecha}</td>
+        <td>${item.cultivo}</td>
+        <td>${Number(item.cantidad)} ${item.unidad}</td>
+        <td>${item.metodo}</td>
+        <td>${escapeHtml(item.responsable)}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+  updateTotalesYComparaciones();
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+}
+
+/* --- Totals & comparisons --- */
+function updateTotalesYComparaciones(){
+  const r = loadRiegos();
+  let totalGlobalNum = 0;
+  let totalPapa = 0;
+  let totalCebolla = 0;
+  let lastDate = null;
+
+  // Only sum entries in mm for comparison; if unidad !== 'mm' those entries count for global sum as "ignored for comparison"
+  for(const item of r){
+    // convert to Number to avoid JS string concat issues (digit-by-digit safe)
+    const q = Number(item.cantidad);
+    if(!isNaN(q)){
+      // For global display, if unit is liters we cannot add in mm; show as "X litros" separate? Simpler: only show mm totals; but we will sum mm only and show note.
+      if(item.unidad === 'mm'){
+        totalGlobalNum += q;
+        if(item.cultivo === 'Papa') totalPapa += q;
+        if(item.cultivo === 'Cebolla') totalCebolla += q;
+      }
+    }
+    if(!lastDate || item.createdAt > lastDate) lastDate = item.createdAt;
+  }
+
+  // Update UI
+  $('totalGlobal').textContent = totalGlobalNum.toFixed(1) + ' mm';
+  $('totalPapa').textContent = totalPapa.toFixed(1) + ' mm';
+  $('totalCebolla').textContent = totalCebolla.toFixed(1) + ' mm';
+  $('ultimaCarga').textContent = lastDate ? new Date(lastDate).toLocaleString() : '—';
+
+  // For each crop compute avg mm/week over period
+  updateStatusForCrop('Papa', totalPapa, r.filter(x=> x.cultivo==='Papa' && x.unidad==='mm'));
+  updateStatusForCrop('Cebolla', totalCebolla, r.filter(x=> x.cultivo==='Cebolla' && x.unidad==='mm'));
+}
+
+function updateStatusForCrop(cropName, total_mm, entriesInMm){
+  const statusEl = cropName === 'Papa' ? $('statusPapa') : $('statusCebolla');
+
+  if(entriesInMm.length === 0){
+    statusEl.innerHTML = `<span class="small muted-small">Sin datos en mm para comparar</span>`;
+    return;
+  }
+
+  // find earliest and latest dates among entriesInMm
+  const dates = entriesInMm.map(e => e.fecha).sort();
+  const first = dates[0];
+  const last = dates[dates.length - 1];
+  // days between first and last
+  let daysSpan = daysBetween(first, last);
+  if(daysSpan < 1) daysSpan = 1; // al menos 1 día
+  // weeks = ceil(daysSpan / 7) mínimo 1
+  let weeks = Math.ceil((daysSpan + 1) / 7); // +1 para abarcar inclusive
+  if(weeks < 1) weeks = 1;
+
+  // promedio mm/semana
+  const avgPerWeek = total_mm / weeks;
+
+  // Determine season using last date's month
+  const month = Number(last.split('-')[1]); // 'YYYY-MM-DD' -> MM
+  const season = seasonFromMonth(month);
+  const range = recommended[cropName][season]; // [min,max]
+
+  const avgRound = Number(avgPerWeek.toFixed(1));
+  let badgeClass = 'ok';
+  let message = `Promedio: ${avgRound} mm/semana · Temporada (${season}): ${range[0]} - ${range[1]} mm/semana`;
+
+  if(avgPerWeek < range[0]){
+    badgeClass = 'bad';
+    message = `Por debajo: ${avgRound} mm/semana (recomendado ${range[0]} - ${range[1]}). ${message}`;
+  } else if(avgPerWeek > range[1]){
+    badgeClass = 'warn';
+    message = `Por encima: ${avgRound} mm/semana (recomendado ${range[0]} - ${range[1]}). ${message}`;
+  } else {
+    badgeClass = 'ok';
+    message = `Dentro del rango recomendado: ${avgRound} mm/semana (${range[0]} - ${range[1]}). Temporada: ${season}`;
+  }
+
+  statusEl.innerHTML = `<span class="badge ${badgeClass}">${message}</span>`;
+}
+
+/* --- Form handling --- */
+const form = $('riegoForm');
+const toast = $('toast');
+
+form.addEventListener('submit', function(ev){
+  ev.preventDefault();
+
+  const fecha = $('fecha').value;
+  const cultivo = $('cultivo').value;
+  const cantidadRaw = $('cantidad').value;
+  const unidad = $('unidad').value;
+  const metodo = $('metodo').value;
+  const responsable = $('responsable').value.trim();
+
+  // Validaciones
+  if(!fecha){
+    alert('Por favor selecciona una fecha.');
+    return;
+  }
+
+  // fecha no futura
+  const hoy = hoyISO();
+  if(fecha > hoy){
+    alert('La fecha no puede ser futura');
+    return;
+  }
+
+  // cantidad > 0
+  const cantidad = Number(cantidadRaw);
+  if(isNaN(cantidad) || cantidad <= 0){
+    alert('El volumen debe ser mayor a 0');
+    return;
+  }
+
+  // Guardar registro
+  const riegos = loadRiegos();
+  const nuevo = {
+    id: cryptoRandomId(),
+    fecha,
+    cultivo,
+    cantidad: Number(Number(cantidad).toFixed(2)), // almacenar num con 2 decimales
+    unidad,
+    metodo,
+    responsable,
+    createdAt: new Date().toISOString()
+  };
+  riegos.push(nuevo);
+  saveRiegos(riegos);
+
+  // Mostrar mensaje "Riego guardado"
+  toast.textContent = 'Riego guardado';
+  toast.style.display = 'block';
+  setTimeout(()=> { toast.style.display = 'none'; }, 2200);
+
+  // Reset parcial del form (mantener cultivo si quieres)
+  form.reset();
+  $('fecha').value = hoyISO(); // poner hoy por defecto útil
+
+  renderTabla();
+});
+
+/* small random id */
+function cryptoRandomId(){
+  // simple id
+  return 'id_' + Math.random().toString(36).slice(2,10);
+}
+
+/* --- Limpieza --- */
+$('limpiar').addEventListener('click', function(){
+  if(confirm('¿Seguro quieres eliminar todos los registros? Esta acción no se puede deshacer.')) {
+    localStorage.removeItem(LS_KEY);
+    renderTabla();
+  }
+});
+
+/* --- Init --- */
+(function init(){
+  // Si no hay fecha, poner hoy por defecto
+  if(!$('fecha').value) $('fecha').value = hoyISO();
+  renderTabla();
+})();
+
+</script>
+</body>
+</html>
 
