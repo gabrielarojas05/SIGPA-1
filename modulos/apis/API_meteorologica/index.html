@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clima – Módulo Integrado</title>
+    <!-- Tipografía principal (Outfit) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="shell">
+    <header>
+        <div class="brand" aria-label="Identidad del módulo">
+        <div class="brand__mark" aria-hidden="true"></div>
+        <div>
+            <div class="brand__title">Panel Climático</div>
+            <div class="brand__subtitle">Datos en tiempo real – OpenWeather</div>
+        </div>
+        </div>
+        <div class="status" id="status">
+        <span id="statusText">Listo</span>
+        </div>
+    </header>
+
+    <!-- Toolbar de búsqueda -->
+    <section class="toolbar" aria-labelledby="buscar-titulo">
+        <h2 id="buscar-titulo" class="visually-hidden">Búsqueda</h2>
+        <form class="search" id="searchForm">
+        <input id="cityInput" class="input" type="text" placeholder="Buscar por ciudad (p. ej., Bogotá)" aria-label="Ciudad" />
+        <button class="btn" id="btnBuscar" type="submit">Buscar</button>
+        <button class="btn btn--ghost" id="btnGeo" type="button">Usar mi ubicación</button>
+        </form>
+        <div class="divider" aria-hidden="true"></div>
+        <small class="muted">Consejo: también puede pegar coordenadas "lat,lon" (p. ej., 4.71,-74.07)</small>
+    </section>
+
+    <main>
+        <div class="grid">
+        <!-- Área principal de información climática -->
+        <section class="card" aria-labelledby="clima-titulo">
+            <h2 id="clima-titulo" class="card__title">Condiciones actuales</h2>
+
+            <div class="weather" id="weatherPanel">
+            <div class="weather__temp" id="temp">—°C</div>
+            <div>
+                <div id="cityName" class="kpi__value" style="margin-bottom:6px;">—</div>
+                <div id="cond" class="muted">—</div>
+                <div id="date" class="muted">—</div>
+            </div>
+            </div>
+
+            <div class="weather__meta">
+            <div class="kpi">
+                <div class="kpi__label">Humedad</div>
+                <div class="kpi__value" id="humidity">—%</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi__label">Viento</div>
+                <div class="kpi__value" id="wind">— km/h</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi__label">Prob. lluvia (hoy)</div>
+                <div class="kpi__value" id="pop">—%</div>
+            </div>
+            </div>
+        </section>
+
+        <!-- Sección de alertas dinámicas -->
+        <aside class="card" aria-labelledby="alertas-titulo">
+            <h2 id="alertas-titulo" class="card__title">Alertas</h2>
+            <div class="alerts" id="alerts">
+            <div class="muted">No hay alertas por ahora.</div>
+            </div>
+        </aside>
+        </div>
+    </main>
+
+    <footer>
+        Fuente de datos: OpenWeatherMap · Los textos están en español y las unidades en °C
+    </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
